@@ -40,7 +40,6 @@ export default [
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-type-checked',
     'plugin:jsx-a11y/recommended',
-    'plugin:tailwindcss/recommended',
     'plugin:prettier/recommended',
     'prettier'
   ),
@@ -75,9 +74,6 @@ export default [
       '@typescript-eslint/no-floating-promises': 'off',
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
-      'tailwindcss/classnames-order': 'warn',
-      'tailwindcss/no-custom-classname': 'warn',
-      'tailwindcss/no-contradicting-classname': 'error',
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
       'no-console': [
