@@ -1,4 +1,7 @@
+import { Separator } from '@/components/ui/separator';
+
 import DesignPanel from './components/agent/design';
+import TestPanel from './components/agent/test';
 import PanelTitle from './components/title';
 
 const RightPanel: React.FC = () => {
@@ -7,6 +10,8 @@ const RightPanel: React.FC = () => {
       <PanelTitle />
       <div className="flex flex-row h-full">
         <DesignPanel />
+        <Separator orientation="vertical" className="h-full" />
+        <TestPanel />
       </div>
     </div>
   );
