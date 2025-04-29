@@ -29,7 +29,7 @@ const DesignPanel: React.FC = () => {
                 <SelectContent>
                   <SelectItem value="openai">
                     <img src="./src/assets/logo/openai.png" alt="OpenAI" className="w-4 h-4 mr-1" />
-                    OpenAI
+                    GPT-4o Mini
                   </SelectItem>
                   <SelectItem value="anthropic">
                     <img
@@ -37,7 +37,7 @@ const DesignPanel: React.FC = () => {
                       alt="Anthropic"
                       className="w-4 h-4 mr-1"
                     />
-                    Anthropic
+                    Claude 3 Sonnet
                   </SelectItem>
                   <SelectItem value="mistral">
                     <img
@@ -45,11 +45,11 @@ const DesignPanel: React.FC = () => {
                       alt="Mistral"
                       className="w-4 h-4 mr-1"
                     />
-                    Mistral
+                    Mistral 7B
                   </SelectItem>
                   <SelectItem value="meta">
                     <img src="./src/assets/logo/meta.png" alt="Meta" className="w-4 h-4 mr-1" />
-                    Meta
+                    LLaMA 3
                   </SelectItem>
                 </SelectContent>
               </Select>
