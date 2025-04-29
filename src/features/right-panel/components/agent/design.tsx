@@ -8,8 +8,23 @@ import {
 } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
+import { LLMS } from '@/const/agents';
 
-const DesignPanel: React.FC = () => {
+interface DesignPanelProps {
+  isRunning: boolean;
+  llm: (typeof LLMS)[number]['id'] | '';
+  setLlm: React.Dispatch<React.SetStateAction<(typeof LLMS)[number]['id'] | ''>>;
+  instructions: string;
+  setInstructions: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const DesignPanel: React.FC<DesignPanelProps> = ({
+  isRunning,
+  llm,
+  setLlm,
+  instructions,
+  setInstructions,
+}) => {
   return (
     <div className="flex flex-col p-4 gap-4 w-full">
       <h2 className="text-lg font-source-sans-pro">Design</h2>
@@ -22,41 +37,33 @@ const DesignPanel: React.FC = () => {
           <div className="flex flex-col gap-4 py-4">
             <div className="flex flex-col gap-2">
               <Label>Large Language Model*</Label>
-              <Select>
+              <Select
+                disabled={isRunning}
+                value={llm}
+                onValueChange={(value: (typeof LLMS)[number]['id']) => setLlm(value)}
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select an LLM" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="openai">
-                    <img src="./src/assets/logo/openai.png" alt="OpenAI" className="w-4 h-4 mr-1" />
-                    GPT-4o Mini
-                  </SelectItem>
-                  <SelectItem value="anthropic">
-                    <img
-                      src="./src/assets/logo/anthropic.png"
-                      alt="Anthropic"
-                      className="w-4 h-4 mr-1"
-                    />
-                    Claude 3 Sonnet
-                  </SelectItem>
-                  <SelectItem value="mistral">
-                    <img
-                      src="./src/assets/logo/mistral.png"
-                      alt="Mistral"
-                      className="w-4 h-4 mr-1"
-                    />
-                    Mistral 7B
-                  </SelectItem>
-                  <SelectItem value="meta">
-                    <img src="./src/assets/logo/meta.png" alt="Meta" className="w-4 h-4 mr-1" />
-                    LLaMA 3
-                  </SelectItem>
+                  {LLMS.map((llm) => (
+                    <SelectItem key={llm.id} value={llm.id}>
+                      <img src={llm.logo} alt={llm.name} className="w-4 h-4 mr-1" />
+                      {llm.name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
             <div className="flex flex-col gap-2 max-h-96">
               <Label>Instructions*</Label>
-              <Textarea placeholder="Placeholder" className="resize-none" />
+              <Textarea
+                placeholder="Placeholder"
+                disabled={isRunning}
+                value={instructions}
+                onChange={(e) => setInstructions(e.target.value)}
+                className="resize-none"
+              />
               <p className="text-sm text-muted-foreground">
                 Tell the AI what it will have to do. You can include personality, tone, and more.
               </p>
