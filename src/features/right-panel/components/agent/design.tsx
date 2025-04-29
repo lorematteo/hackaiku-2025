@@ -56,7 +56,7 @@ const DesignPanel: React.FC = () => {
             </div>
             <div className="flex flex-col gap-2">
               <Label>Instructions*</Label>
-              <Textarea placeholder="Placeholder" />
+              <Textarea placeholder="Placeholder" className="resize-none" />
               <p className="text-sm text-muted-foreground">
                 Tell the AI what it will have to do. You can include personality, tone, and more.
               </p>
