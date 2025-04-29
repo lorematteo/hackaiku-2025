@@ -13,10 +13,12 @@ import {
   useNodesState,
   useReactFlow,
 } from '@xyflow/react';
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 import Sidebar from '../components/Sidebar';
 import { DnDProvider, useDnD } from '../context/DnDContext';
+import AnimationControls from '../features/graph/animated-controls';
+import AnimatedEdge from '../features/graph/animated-edge';
 
 const initialNodes: Node[] = [
   {
@@ -30,15 +32,20 @@ const initialNodes: Node[] = [
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 
+const edgeTypes = {
+  animated: AnimatedEdge,
+};
+
 const DnDFlow = () => {
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const { screenToFlowPosition } = useReactFlow();
   const [type] = useDnD();
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const onConnect = useCallback(
-    (params: Connection) => setEdges((eds) => addEdge(params, eds)),
+    (params: Connection) => setEdges((eds) => addEdge({ ...params, type: 'animated' }, eds)),
     [setEdges]
   );
 
@@ -72,22 +79,41 @@ const DnDFlow = () => {
     [screenToFlowPosition, type, setNodes]
   );
 
+  const handleToggleAnimation = useCallback(
+    (animating: boolean) => {
+      console.warn('animating', animating);
+      setIsAnimating(animating);
+      setEdges((eds) =>
+        eds.map((edge) => ({
+          ...edge,
+          data: { ...edge.data, isAnimating: animating },
+        }))
+      );
+    },
+    [setEdges]
+  );
+
   return (
     <div className="flex h-screen">
       <div className="flex-1 h-full" ref={reactFlowWrapper}>
         <ReactFlow
           nodes={nodes}
-          edges={edges}
+          edges={edges.map((edge) => ({
+            ...edge,
+            data: { ...edge.data, isAnimating },
+          }))}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
           onDrop={onDrop}
           onDragOver={onDragOver}
+          edgeTypes={edgeTypes}
           fitView
           style={{ width: '100%', height: '100%' }}
         >
           <Controls />
           <Background />
+          <AnimationControls onToggleAnimation={handleToggleAnimation} />
         </ReactFlow>
       </div>
       <Sidebar />
