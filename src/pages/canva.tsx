@@ -18,7 +18,6 @@ import { useCallback, useRef, useState } from 'react';
 import { DnDProvider } from '@/context/DnDContext';
 import AnimationControls from '@/features/graph/animated-controls';
 import AnimatedEdge from '@/features/graph/animated-edge';
-import { LeftPanel } from '@/features/left-panel';
 
 const initialNodes: Node[] = [
   {
@@ -92,8 +91,7 @@ const DnDFlow = () => {
   );
 
   return (
-    <div className="flex h-screen">
-      <LeftPanel />
+    <div className="h-full w-full">
       <div className="flex-1 h-full" ref={reactFlowWrapper}>
         <ReactFlow
           nodes={nodes}
