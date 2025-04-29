@@ -54,7 +54,7 @@ const DesignPanel: React.FC = () => {
                 </SelectContent>
               </Select>
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 max-h-96">
               <Label>Instructions*</Label>
               <Textarea placeholder="Placeholder" className="resize-none" />
               <p className="text-sm text-muted-foreground">

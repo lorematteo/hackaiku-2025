@@ -11,7 +11,7 @@ const TestPanel: React.FC = () => {
       <h2 className="text-lg font-source-sans-pro">Test</h2>
       <div className="flex flex-col gap-2">
         <Label>Message*</Label>
-        <Textarea placeholder="Placeholder" className="resize-none" />
+        <Textarea placeholder="Placeholder" className="resize-none h-24" />
         <div className="flex justify-end">
           <Button className="w-auto hover:cursor-pointer" variant="outline">
             <PlayIcon className="size-4" />
