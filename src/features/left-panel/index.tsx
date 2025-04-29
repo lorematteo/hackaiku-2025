@@ -9,6 +9,12 @@ import { NodeItem } from '@/features/left-panel/components/node-item';
 export const LeftPanel = () => {
   const [selectedMenu, setSelectedMenu] = useState<null | string>(null);
 
+  const handleDragStart = (event: React.DragEvent, type: string) => {
+    event.dataTransfer.setData('application/reactflow', type);
+    event.dataTransfer.effectAllowed = 'move';
+    // Optionnel: setType(type) si tu utilises un context
+  };
+
   return (
     <aside className="w-64 h-full border-r bg-white flex flex-col">
       <div className="p-2">
@@ -40,7 +46,13 @@ export const LeftPanel = () => {
           </div>
           <div className="flex-1 overflow-y-auto p-2 flex flex-col gap-2">
             {DSSLeftPanelNodes[selectedMenu as keyof typeof DSSLeftPanelNodes].map((node) => (
-              <NodeItem key={node.id} label={node.name} desc={node.desc} />
+              <NodeItem
+                key={node.id}
+                label={node.name}
+                desc={node.desc}
+                type={node.id}
+                onDragStart={handleDragStart}
+              />
             ))}
           </div>
         </div>
