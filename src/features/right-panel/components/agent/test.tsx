@@ -2,6 +2,7 @@ import { CircleStop, PlayIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
 import { LLMS } from '@/const/agents';
@@ -73,7 +74,20 @@ const TestPanel: React.FC<TestPanelProps> = ({
           <TabsTrigger value="full-response">Full response</TabsTrigger>
           <TabsTrigger value="trace">Trace</TabsTrigger>
         </TabsList>
-        <TabsContent value="full-response"></TabsContent>
+        <TabsContent value="full-response">
+          {isRunning ? (
+            <div className="w-full min-h-40 bg-white rounded-xs border border-base-300 px-3 py-2">
+              <div className="flex flex-col gap-2 w-full pt-1.5">
+                <Skeleton className="w-full h-[14px] rounded-full" />
+                <Skeleton className="w-32 h-[14px] rounded-full" />
+              </div>
+            </div>
+          ) : (
+            <div className="w-full h-40 bg-zinc-100 rounded-xs flex items-center justify-center">
+              <p className="text-sm text-muted-foreground">The agent’s response will appear here</p>
+            </div>
+          )}
+        </TabsContent>
         <TabsContent value="trace"></TabsContent>
       </Tabs>
     </div>
