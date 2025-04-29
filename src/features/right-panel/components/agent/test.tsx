@@ -1,11 +1,13 @@
 import { CircleStop, PlayIcon } from 'lucide-react';
+import React, { useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import LLMOutput from '@/components/ui/llm-output';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
-import { LLMS } from '@/const/agents';
+import { LLMS, SAMPLE_OUTPUT } from '@/const/agents';
 
 interface TestPanelProps {
   isRunning: boolean;
@@ -24,17 +26,30 @@ const TestPanel: React.FC<TestPanelProps> = ({
   llm,
   instructions,
 }) => {
+  const [isLoading, setIsLoading] = React.useState(false);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const [isAborted, setIsAborted] = React.useState(false);
+
   const handleClick = () => {
     if (!isRunning) {
+      setIsAborted(false);
       setIsRunning(true);
+      setIsLoading(true);
       // Simulate a delay for the running state
       setTimeout(() => {
-        setIsRunning(false);
+        setIsLoading(false);
       }, 2000);
     } else {
-      setIsRunning(false);
+      setIsAborted(true);
     }
   };
+
+  useEffect(() => {
+    if (isAborted) {
+      setIsLoading(false);
+      setIsRunning(false);
+    }
+  }, [isAborted, setIsLoading, setIsRunning]);
 
   return (
     <div className="flex flex-col p-4 gap-4 w-full">
@@ -74,13 +89,25 @@ const TestPanel: React.FC<TestPanelProps> = ({
           <TabsTrigger value="full-response">Full response</TabsTrigger>
           <TabsTrigger value="trace">Trace</TabsTrigger>
         </TabsList>
-        <TabsContent value="full-response">
-          {isRunning ? (
-            <div className="w-full min-h-40 bg-white rounded-xs border border-base-300 px-3 py-2">
-              <div className="flex flex-col gap-2 w-full pt-1.5">
-                <Skeleton className="w-full h-[14px] rounded-full" />
-                <Skeleton className="w-32 h-[14px] rounded-full" />
-              </div>
+        <TabsContent value="full-response" className="pt-2">
+          {isRunning || (isAborted && !isLoading) ? (
+            <div
+              ref={containerRef}
+              className="w-full min-h-40 max-h-96 overflow-auto bg-white rounded-xs border border-base-300 px-3 py-2"
+            >
+              {isLoading ? (
+                <div className="flex flex-col gap-2 w-full pt-1.5">
+                  <Skeleton className="w-full h-[14px] rounded-full" />
+                  <Skeleton className="w-32 h-[14px] rounded-full" />
+                </div>
+              ) : (
+                <LLMOutput
+                  fullText={SAMPLE_OUTPUT}
+                  setFinished={setIsAborted}
+                  containerRef={containerRef}
+                  aborted={isAborted}
+                />
+              )}
             </div>
           ) : (
             <div className="w-full h-40 bg-zinc-100 rounded-xs flex items-center justify-center">
