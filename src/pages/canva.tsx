@@ -15,10 +15,10 @@ import {
 } from '@xyflow/react';
 import { useCallback, useRef, useState } from 'react';
 
-import Sidebar from '../components/Sidebar';
-import { DnDProvider, useDnD } from '../context/DnDContext';
-import AnimationControls from '../features/graph/animated-controls';
-import AnimatedEdge from '../features/graph/animated-edge';
+import { DnDProvider, useDnD } from '@/context/DnDContext';
+import AnimationControls from '@/features/graph/animated-controls';
+import AnimatedEdge from '@/features/graph/animated-edge';
+import { LeftPanel } from '@/features/left-panel';
 
 const initialNodes: Node[] = [
   {
@@ -95,6 +95,7 @@ const DnDFlow = () => {
 
   return (
     <div className="flex h-screen">
+      <LeftPanel />
       <div className="flex-1 h-full" ref={reactFlowWrapper}>
         <ReactFlow
           nodes={nodes}
@@ -116,7 +117,6 @@ const DnDFlow = () => {
           <AnimationControls onToggleAnimation={handleToggleAnimation} />
         </ReactFlow>
       </div>
-      <Sidebar />
     </div>
   );
 };
