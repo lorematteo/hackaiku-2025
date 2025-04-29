@@ -1,10 +1,9 @@
-import { CircleStop, PlayIcon } from 'lucide-react';
+import { CircleStop, LoaderPinwheel, PlayIcon } from 'lucide-react';
 import React, { useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import LLMOutput from '@/components/ui/llm-output';
-import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
 import { LLMS, SAMPLE_OUTPUT } from '@/const/agents';
@@ -96,10 +95,7 @@ const TestPanel: React.FC<TestPanelProps> = ({
               className="w-full min-h-40 max-h-96 overflow-auto bg-white rounded-xs border border-base-300 px-3 py-2"
             >
               {isLoading ? (
-                <div className="flex flex-col gap-2 w-full pt-1.5">
-                  <Skeleton className="w-full h-[14px] rounded-full" />
-                  <Skeleton className="w-32 h-[14px] rounded-full" />
-                </div>
+                <LoaderPinwheel className="size-6 animate-spin mx-auto mt-14" />
               ) : (
                 <LLMOutput
                   fullText={SAMPLE_OUTPUT}
