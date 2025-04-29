@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
 @import 'tailwindcss';
 @import "tw-animate-css";
 
@@ -117,4 +118,18 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@theme {
+  --color-greyscale-grey-base: #222222;
+  --color-cyan-blue-base: #28A9DD;
+  --color-pink-base: #D66F9E;
+  --color-green-base: #28AE5B;
+  --color-orange-base: #F18B38;
+  --color-purple-base: #8341A9;
+  --color-steel-blue-base: #417996;
+  --color-red-base: #F34336;
+  --color-gray-blue-base: #54707e;
+
+  --font-source-sans-pro: "Source Sans 3", sans-serif; 
 }

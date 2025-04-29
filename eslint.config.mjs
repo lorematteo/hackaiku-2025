@@ -39,7 +39,6 @@ export default [
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-type-checked',
-    'plugin:jsx-a11y/recommended',
     'plugin:prettier/recommended',
     'prettier'
   ),
