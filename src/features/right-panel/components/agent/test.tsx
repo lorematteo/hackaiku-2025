@@ -11,20 +11,10 @@ import { SAMPLE_OUTPUT } from '@/const/agents';
 interface TestPanelProps {
   isRunning: boolean;
   setIsRunning: React.Dispatch<React.SetStateAction<boolean>>;
-  message: string;
-  setMessage: React.Dispatch<React.SetStateAction<string>>;
-  llm: string;
-  instructions: string;
 }
 
-const TestPanel: React.FC<TestPanelProps> = ({
-  isRunning,
-  setIsRunning,
-  message,
-  setMessage,
-  llm,
-  instructions,
-}) => {
+const TestPanel: React.FC<TestPanelProps> = ({ isRunning, setIsRunning }) => {
+  const [message, setMessage] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [isAborted, setIsAborted] = React.useState(false);
@@ -64,7 +54,7 @@ const TestPanel: React.FC<TestPanelProps> = ({
         />
         <div className="flex justify-end">
           <Button
-            disabled={!isRunning && (!llm || !instructions || !message)}
+            disabled={!isRunning && !message}
             className="w-auto hover:cursor-pointer"
             variant="outline"
             onClick={handleClick}

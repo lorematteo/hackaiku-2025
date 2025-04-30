@@ -1,14 +1,15 @@
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
+import { LLMConfig } from '@/const/nodes';
 
 interface DesignPanelProps {
   isRunning: boolean;
-  instructions: string;
-  setInstructions: (value: string) => void;
+  config: LLMConfig;
+  updateConfig: (config: Partial<LLMConfig>) => void;
 }
 
-const DesignPanel: React.FC<DesignPanelProps> = ({ isRunning, instructions, setInstructions }) => {
+const DesignPanel: React.FC<DesignPanelProps> = ({ config, updateConfig, isRunning }) => {
   return (
     <div className="flex flex-col p-4 gap-4 w-full">
       <h2 className="text-lg font-source-sans-pro">Design</h2>
@@ -24,8 +25,8 @@ const DesignPanel: React.FC<DesignPanelProps> = ({ isRunning, instructions, setI
               <Textarea
                 placeholder="Placeholder"
                 disabled={isRunning}
-                value={instructions}
-                onChange={(e) => setInstructions(e.target.value)}
+                value={config.instructions}
+                onChange={(e) => updateConfig({ instructions: e.target.value })}
                 className="resize-none"
               />
               <p className="text-sm text-muted-foreground">

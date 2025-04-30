@@ -1,13 +1,13 @@
 import React from 'react';
 
 import { Separator } from '@/components/ui/separator';
-import { NodeType } from '@/const/nodes';
+import { AgentConfig, LLMConfig, NodeType, ToolConfig } from '@/const/nodes';
 
 import AgentDesignPanel from './components/agent/design';
 import TestPanel from './components/agent/test';
 import LLMDesignPanel from './components/llm/design';
 import PanelTitle from './components/title';
-import ToolConfigPanel from './components/tool/design';
+import ToolDesignPanel from './components/tool/design';
 interface RightPanelProps {
   nodeData: NodeType | null;
   updateNodeData: (data: Partial<NodeType>) => void;
@@ -22,7 +22,6 @@ const RightPanel: React.FC<RightPanelProps> = ({
   onClose,
 }) => {
   const [isRunning, setIsRunning] = React.useState(false);
-  const [message, setMessage] = React.useState('');
 
   const config = nodeData?.config || { llm: '', instructions: '' };
 
@@ -43,36 +42,31 @@ const RightPanel: React.FC<RightPanelProps> = ({
         onClose={onClose}
       />
       <div className="flex flex-row h-full">
-        {nodeData.type === 'tool' && <ToolConfigPanel />}
-        {nodeData.type === 'agent' && (
-          <AgentDesignPanel
+        {nodeData.type === 'tool' && (
+          <ToolDesignPanel
+            toolId={nodeData.id}
+            config={config as ToolConfig}
+            updateConfig={updateNodeConfig}
             isRunning={isRunning}
-            llm={config.llm}
-            setLlm={(newLlm) => updateNodeConfig({ llm: newLlm })}
-            instructions={config.instructions}
-            setInstructions={(newInstructions) =>
-              updateNodeConfig({ instructions: newInstructions })
-            }
           />
         )}
+        {nodeData.type === 'agent' ||
+          (nodeData.type === 'main-agent' && (
+            <AgentDesignPanel
+              config={config as AgentConfig}
+              updateConfig={updateNodeConfig}
+              isRunning={isRunning}
+            />
+          ))}
         {nodeData.type === 'llm' && (
           <LLMDesignPanel
+            config={config as LLMConfig}
+            updateConfig={updateNodeConfig}
             isRunning={isRunning}
-            instructions={config.instructions}
-            setInstructions={(newInstructions) =>
-              updateNodeConfig({ instructions: newInstructions })
-            }
           />
         )}
         <Separator orientation="vertical" className="h-full" />
-        <TestPanel
-          isRunning={isRunning}
-          setIsRunning={setIsRunning}
-          message={message}
-          setMessage={setMessage}
-          llm={config.llm}
-          instructions={config.instructions}
-        />
+        <TestPanel isRunning={isRunning} setIsRunning={setIsRunning} />
       </div>
     </div>
   );

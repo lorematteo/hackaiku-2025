@@ -4,13 +4,28 @@ export type NodeType = {
   name: string;
   desc: string;
   icon: string;
-  config?: AgentConfig;
+  config?: AgentConfig | ToolConfig;
   isSelected?: boolean;
 };
 
 export type AgentConfig = {
   llm: string;
   instructions: string;
+};
+
+export type LLMConfig = {
+  instructions: string;
+};
+
+export type ToolConfig = {
+  'llm-agent'?: string;
+  purpose?: string;
+  'system-prompt'?: string;
+  integration?: string;
+  authorization?: string;
+  channel?: string;
+  username?: string;
+  'additional-description'?: string;
 };
 
 export const MAIN_AGENT: NodeType = {
