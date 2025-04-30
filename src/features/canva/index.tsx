@@ -1,13 +1,13 @@
-import '@xyflow/react/dist/style.css';
 import '@/index.css';
+import '@xyflow/react/dist/style.css';
 
 import {
   addEdge,
   Background,
-  Connection,
+  type Connection,
   Controls,
-  Edge,
-  Node,
+  type Edge,
+  type Node,
   ReactFlow,
   ReactFlowProvider,
   useEdgesState,
@@ -16,7 +16,7 @@ import {
 } from '@xyflow/react';
 import { useCallback, useRef, useState } from 'react';
 
-import { NodeType } from '@/const/nodes';
+import type { NodeType } from '@/const/nodes';
 import { DnDProvider } from '@/context/DnDContext';
 import AnimationControls from '@/features/graph/animated-controls';
 import AnimatedEdge from '@/features/graph/animated-edge';
@@ -25,6 +25,7 @@ import AgentNode from './nodes/agent';
 import LLMNode from './nodes/llm';
 import MainAgentNode from './nodes/main-agent';
 import ToolNode from './nodes/tool';
+import { propagateAnimation } from './utils/animation.utils';
 
 const initialNodes: Node[] = [
   {
@@ -38,7 +39,12 @@ const initialNodes: Node[] = [
 
 // we define the nodeTypes outside of the component to prevent re-renderings
 // you could also use useMemo inside the component
-const nodeTypes = { 'main-agent': MainAgentNode, tool: ToolNode, agent: AgentNode, llm: LLMNode };
+const nodeTypes = {
+  'main-agent': MainAgentNode,
+  tool: ToolNode,
+  agent: AgentNode,
+  llm: LLMNode,
+};
 
 let id = 0;
 const getId = () => `dndnode_${id++}`;
@@ -91,8 +97,26 @@ const DnDFlow = () => {
 
   const handleToggleAnimation = useCallback(
     (animating: boolean) => {
-      console.warn('animating', animating);
       setIsAnimating(animating);
+      if (animating) {
+        // Reset all nodes
+        setNodes((nds) =>
+          nds.map((node) => ({
+            ...node,
+            data: { ...node.data, isAnimating: false },
+          }))
+        );
+        // Start propagation from Main Agent
+        propagateAnimation('1', edges, setNodes, 1000); // 1s delay
+      } else {
+        // Stop animation everywhere
+        setNodes((nds) =>
+          nds.map((node) => ({
+            ...node,
+            data: { ...node.data, isAnimating: false },
+          }))
+        );
+      }
       setEdges((eds) =>
         eds.map((edge) => ({
           ...edge,
@@ -100,7 +124,7 @@ const DnDFlow = () => {
         }))
       );
     },
-    [setEdges]
+    [setEdges, setNodes, edges]
   );
 
   return (
