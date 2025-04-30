@@ -62,41 +62,15 @@ const NodeIcon: React.FC<NodeIconProps> = ({ name, className }) => {
         />
       );
     case 'openai':
-      return (
-        <img
-          src="./src/assets/logo/openai.png"
-          alt="OpenAI"
-          className={cn('size-6 p-1', className)}
-        />
-      );
+      return <img src="/logo/openai.png" alt="OpenAI" className={cn('size-6 p-1', className)} />;
     case 'anthropic':
-      return (
-        <img
-          src="./src/assets/logo/anthropic.png"
-          alt="Llama"
-          className={cn('size-6 p-1', className)}
-        />
-      );
+      return <img src="/logo/anthropic.png" alt="Llama" className={cn('size-6 p-1', className)} />;
     case 'mistral':
-      return (
-        <img
-          src="./src/assets/logo/mistral.png"
-          alt="Llama2"
-          className={cn('size-6 p-1', className)}
-        />
-      );
+      return <img src="/logo/mistral.png" alt="Llama2" className={cn('size-6 p-1', className)} />;
     case 'meta':
-      return (
-        <img src="./src/assets/logo/meta.png" alt="Meta" className={cn('size-6 p-1', className)} />
-      );
+      return <img src="/logo/meta.png" alt="Meta" className={cn('size-6 p-1', className)} />;
     case 'slack':
-      return (
-        <img
-          src="./src/assets/logo/slack.png"
-          alt="Slack"
-          className={cn('size-6 p-1', className)}
-        />
-      );
+      return <img src="/logo/slack.png" alt="Slack" className={cn('size-6 p-1', className)} />;
   }
 
   return <div>Not found</div>;
