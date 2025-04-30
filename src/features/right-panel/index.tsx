@@ -7,7 +7,7 @@ import { LLMS } from '@/const/agents';
 import DesignPanel from './components/agent/design';
 import TestPanel from './components/agent/test';
 import PanelTitle from './components/title';
-
+import ToolConfigPanel from './components/tool/design';
 interface RightPanelProps {
   node: Node;
   onClose: () => void;
@@ -24,13 +24,17 @@ const RightPanel: React.FC<RightPanelProps> = ({ node, onClose, onRename }) => {
     <div className="flex flex-col bg-white min-w-2xl w-2xl border-l border-base-300 ml-auto max-h-screen overflow-y-auto">
       <PanelTitle node={node} onClose={onClose} onRename={onRename} />
       <div className="flex flex-row h-full">
-        <DesignPanel
-          isRunning={isRunning}
-          llm={llm}
-          setLlm={setLlm}
-          instructions={instructions}
-          setInstructions={setInstructions}
-        />
+        {node.data.type === 'tool' ? (
+          <ToolConfigPanel />
+        ) : (
+          <DesignPanel
+            isRunning={isRunning}
+            llm={llm}
+            setLlm={setLlm}
+            instructions={instructions}
+            setInstructions={setInstructions}
+          />
+        )}
         <Separator orientation="vertical" className="h-full" />
         <TestPanel
           isRunning={isRunning}
