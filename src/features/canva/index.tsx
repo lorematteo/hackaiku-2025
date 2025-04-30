@@ -1,4 +1,5 @@
 import '@xyflow/react/dist/style.css';
+import '@/index.css';
 
 import {
   addEdge,
@@ -19,14 +20,21 @@ import { DnDProvider } from '@/context/DnDContext';
 import AnimationControls from '@/features/graph/animated-controls';
 import AnimatedEdge from '@/features/graph/animated-edge';
 
+import MainAgentNode from './nodes/main-agent';
+
 const initialNodes: Node[] = [
   {
     id: '1',
-    type: 'input',
-    data: { label: 'input node' },
-    position: { x: 250, y: 5 },
+    type: 'main-agent',
+    data: { title: 'Main Agent' },
+    position: { x: 0, y: 0 },
+    draggable: false,
   },
 ];
+
+// we define the nodeTypes outside of the component to prevent re-renderings
+// you could also use useMemo inside the component
+const nodeTypes = { 'main-agent': MainAgentNode };
 
 let id = 0;
 const getId = () => `dndnode_${id++}`;
@@ -105,6 +113,7 @@ const DnDFlow = () => {
           onDrop={onDrop}
           onDragOver={onDragOver}
           edgeTypes={edgeTypes}
+          nodeTypes={nodeTypes}
           fitView
           style={{ width: '100%', height: '100%' }}
         >

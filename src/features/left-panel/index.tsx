@@ -2,7 +2,8 @@ import { ChevronLeft, Search } from 'lucide-react';
 import { useState } from 'react';
 
 import { Input } from '@/components/ui/input';
-import { DSSLeftPanelMenus, DSSLeftPanelNodes } from '@/const/dss-left-panel';
+import { DSSLeftPanelMenus } from '@/const/dss-left-panel';
+import { NODES } from '@/const/nodes';
 import { MenuItem } from '@/features/left-panel/components/menu-item';
 import { NodeItem } from '@/features/left-panel/components/node-item';
 
@@ -53,7 +54,7 @@ export const LeftPanel = () => {
       ) : (
         <div className="flex flex-col h-full">
           <div className="flex-1 overflow-y-auto p-2 flex flex-col gap-2">
-            {DSSLeftPanelNodes[selectedMenu as keyof typeof DSSLeftPanelNodes].map((node) => (
+            {NODES[selectedMenu as keyof typeof NODES].map((node) => (
               <NodeItem
                 key={node.id}
                 label={node.name}
