@@ -4,6 +4,15 @@ export type NodeType = {
   name: string;
   desc: string;
   icon: string;
+  selected?: boolean;
+};
+
+export const MAIN_AGENT: NodeType = {
+  id: 'main-agent',
+  type: 'main-agent',
+  name: 'Main Agent',
+  desc: 'The main agent that coordinates the other agents and tools',
+  icon: 'agent',
 };
 
 export const NODES: {

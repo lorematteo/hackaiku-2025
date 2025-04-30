@@ -16,7 +16,7 @@ import {
 } from '@xyflow/react';
 import { useCallback, useRef, useState } from 'react';
 
-import { NodeType } from '@/const/nodes';
+import { MAIN_AGENT, NodeType } from '@/const/nodes';
 import { DnDProvider } from '@/context/DnDContext';
 import AnimationControls from '@/features/graph/animated-controls';
 import AnimatedEdge from '@/features/graph/animated-edge';
@@ -31,7 +31,7 @@ const initialNodes: Node[] = [
   {
     id: '1',
     type: 'main-agent',
-    data: { title: 'Main Agent' },
+    data: MAIN_AGENT,
     position: { x: 0, y: 0 },
     draggable: false,
   },
@@ -105,9 +105,21 @@ const DnDFlow = () => {
     [setEdges]
   );
 
-  const onNodeClick = useCallback((_: React.MouseEvent, node: Node) => {
-    setSelectedNode(node);
-  }, []);
+  const onNodeClick = useCallback(
+    (_: React.MouseEvent, node: Node) => {
+      setSelectedNode(node);
+      setNodes((nds) =>
+        nds.map((n) => ({
+          ...n,
+          data: {
+            ...n.data,
+            selected: n.id === node.id, // Only selected node gets true
+          },
+        }))
+      );
+    },
+    [setNodes]
+  );
 
   const handleRename = (newLabel: string) => {
     console.warn('Renaming node to:', newLabel);
