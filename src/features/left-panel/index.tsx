@@ -16,7 +16,7 @@ export const LeftPanel = () => {
   };
 
   return (
-    <aside className="w-64 h-full border-r bg-white flex flex-col">
+    <aside className="min-w-3xs h-full border-r bg-white flex flex-col">
       <div className="p-2">
         {selectedMenu && (
           <button

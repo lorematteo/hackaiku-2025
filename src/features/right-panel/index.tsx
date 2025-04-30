@@ -14,7 +14,7 @@ const RightPanel: React.FC = () => {
   const [message, setMessage] = React.useState('');
 
   return (
-    <div className="flex flex-col bg-white w-[744px] border-l border-base-300 h-screen ml-auto">
+    <div className="flex flex-col bg-white min-w-2xl border-l border-base-300 ml-auto">
       <PanelTitle />
       <div className="flex flex-row h-full">
         <DesignPanel
