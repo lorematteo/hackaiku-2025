@@ -23,6 +23,7 @@ import AnimatedEdge from '@/features/graph/animated-edge';
 import RightPanel from '@/features/right-panel';
 
 import AgentNode from './nodes/agent';
+import LLMNode from './nodes/llm';
 import MainAgentNode from './nodes/main-agent';
 import ToolNode from './nodes/tool';
 
@@ -38,7 +39,7 @@ const initialNodes: Node[] = [
 
 // we define the nodeTypes outside of the component to prevent re-renderings
 // you could also use useMemo inside the component
-const nodeTypes = { 'main-agent': MainAgentNode, tool: ToolNode, agent: AgentNode };
+const nodeTypes = { 'main-agent': MainAgentNode, tool: ToolNode, agent: AgentNode, llm: LLMNode };
 
 let id = 0;
 const getId = () => `dndnode_${id++}`;
