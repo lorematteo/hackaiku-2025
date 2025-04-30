@@ -61,6 +61,7 @@ export const ExportDialog = ({
                 className="font-mono"
                 value="7ca44868d2ba977a0bc38cbb548909a6d72cdf94"
                 readOnly
+                tabIndex={-1}
               />
               <Button
                 variant="outline"
