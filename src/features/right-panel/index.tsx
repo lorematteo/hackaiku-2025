@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Separator } from '@/components/ui/separator';
-import { LLMS } from '@/const/agents';
 import { NodeType } from '@/const/nodes';
 
 import DesignPanel from './components/agent/design';
@@ -11,14 +10,20 @@ import ToolConfigPanel from './components/tool/design';
 interface RightPanelProps {
   nodeData: NodeType | null;
   updateNodeData: (data: Partial<NodeType>) => void;
+  updateNodeConfig: (config: Partial<NodeType['config']>) => void;
   onClose: () => void;
 }
 
-const RightPanel: React.FC<RightPanelProps> = ({ nodeData, updateNodeData, onClose }) => {
+const RightPanel: React.FC<RightPanelProps> = ({
+  nodeData,
+  updateNodeData,
+  updateNodeConfig,
+  onClose,
+}) => {
   const [isRunning, setIsRunning] = React.useState(false);
-  const [llm, setLlm] = React.useState<(typeof LLMS)[number]['id'] | ''>('');
-  const [instructions, setInstructions] = React.useState('');
   const [message, setMessage] = React.useState('');
+
+  const config = nodeData?.config || { llm: '', instructions: '' };
 
   const renameNode = (newTitle: string) => {
     updateNodeData({ name: newTitle });
@@ -37,10 +42,12 @@ const RightPanel: React.FC<RightPanelProps> = ({ nodeData, updateNodeData, onClo
         ) : (
           <DesignPanel
             isRunning={isRunning}
-            llm={llm}
-            setLlm={setLlm}
-            instructions={instructions}
-            setInstructions={setInstructions}
+            llm={config.llm}
+            setLlm={(newLlm) => updateNodeConfig({ llm: newLlm })}
+            instructions={config.instructions}
+            setInstructions={(newInstructions) =>
+              updateNodeConfig({ instructions: newInstructions })
+            }
           />
         )}
         <Separator orientation="vertical" className="h-full" />
@@ -49,8 +56,8 @@ const RightPanel: React.FC<RightPanelProps> = ({ nodeData, updateNodeData, onClo
           setIsRunning={setIsRunning}
           message={message}
           setMessage={setMessage}
-          llm={llm}
-          instructions={instructions}
+          llm={config.llm}
+          instructions={config.instructions}
         />
       </div>
     </div>

@@ -6,14 +6,14 @@ import { Label } from '@/components/ui/label';
 import LLMOutput from '@/components/ui/llm-output';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
-import { LLMS, SAMPLE_OUTPUT } from '@/const/agents';
+import { SAMPLE_OUTPUT } from '@/const/agents';
 
 interface TestPanelProps {
   isRunning: boolean;
   setIsRunning: React.Dispatch<React.SetStateAction<boolean>>;
   message: string;
   setMessage: React.Dispatch<React.SetStateAction<string>>;
-  llm: (typeof LLMS)[number]['id'] | '';
+  llm: string;
   instructions: string;
 }
 

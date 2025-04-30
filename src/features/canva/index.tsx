@@ -153,6 +153,28 @@ const DnDFlow = () => {
     [setNodes]
   );
 
+  const updateNodeConfig = useCallback(
+    (nodeId: string, newConfig: Partial<NodeType['config']>) => {
+      setNodes((nodes) =>
+        nodes.map((node) =>
+          node.id === nodeId
+            ? {
+                ...node,
+                data: {
+                  ...node.data,
+                  config: {
+                    ...(node.data.config || {}),
+                    ...newConfig,
+                  },
+                },
+              }
+            : node
+        )
+      );
+    },
+    [setNodes]
+  );
+
   return (
     <div className="h-full w-full flex">
       <div className="flex-1 h-full" ref={reactFlowWrapper}>
@@ -183,6 +205,9 @@ const DnDFlow = () => {
           nodeData={nodes.find((node) => node.id === selectedNode)?.data as NodeType | null}
           onClose={handleUnselect}
           updateNodeData={(data: Partial<NodeType>) => updateNodeData(selectedNode, data)}
+          updateNodeConfig={(config: Partial<NodeType['config']>) =>
+            updateNodeConfig(selectedNode, config)
+          }
         />
       )}
     </div>

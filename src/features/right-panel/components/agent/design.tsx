@@ -12,10 +12,10 @@ import { LLMS } from '@/const/agents';
 
 interface DesignPanelProps {
   isRunning: boolean;
-  llm: (typeof LLMS)[number]['id'] | '';
-  setLlm: React.Dispatch<React.SetStateAction<(typeof LLMS)[number]['id'] | ''>>;
+  llm: string;
+  setLlm: (value: string) => void;
   instructions: string;
-  setInstructions: React.Dispatch<React.SetStateAction<string>>;
+  setInstructions: (value: string) => void;
 }
 
 const DesignPanel: React.FC<DesignPanelProps> = ({

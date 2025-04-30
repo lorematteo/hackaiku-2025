@@ -4,7 +4,13 @@ export type NodeType = {
   name: string;
   desc: string;
   icon: string;
+  config?: AgentConfig;
   isSelected?: boolean;
+};
+
+export type AgentConfig = {
+  llm: string;
+  instructions: string;
 };
 
 export const MAIN_AGENT: NodeType = {
@@ -66,18 +72,26 @@ export const NODES: {
   ],
   agents: [
     {
-      id: 'agent-1',
+      id: 'text-summarization',
       type: 'agent',
-      name: 'Agent 1',
-      desc: 'Description for Agent 1',
+      name: 'Text Summarization',
+      desc: 'Summarize a text',
       icon: 'agent',
+      config: {
+        llm: 'anthropic',
+        instructions: 'Summarize the text',
+      },
     },
     {
-      id: 'agent-2',
+      id: 'text-classification',
       type: 'agent',
-      name: 'Agent 2',
-      desc: 'Description for Agent 2',
+      name: 'Text Classification',
+      desc: 'Classify a text into categories',
       icon: 'agent',
+      config: {
+        llm: 'meta',
+        instructions: 'Classify the text into categories',
+      },
     },
   ],
   llm: [
