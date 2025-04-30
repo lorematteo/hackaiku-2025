@@ -34,7 +34,7 @@ const initialNodes: Node[] = [
     id: '1',
     type: 'main-agent',
     data: MAIN_AGENT,
-    position: { x: 0, y: 0 },
+    position: { x: 600, y: -155 },
     draggable: false,
     deletable: false,
   },
