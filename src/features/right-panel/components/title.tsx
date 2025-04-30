@@ -1,4 +1,3 @@
-import type { Node } from '@xyflow/react';
 import { XIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
 
@@ -7,16 +6,14 @@ import PenIcon from '@/assets/icons/pen';
 import { Button } from '@/components/ui/button';
 
 interface PanelTitleProps {
-  node: Node;
+  title: string;
+  setTitle: (title: string) => void;
   onClose: () => void;
-  onRename: (newLabel: string) => void;
 }
 
-const PanelTitle: React.FC<PanelTitleProps> = ({ node, onClose, onRename }) => {
+const PanelTitle: React.FC<PanelTitleProps> = ({ title, setTitle, onClose }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [editValue, setEditValue] = useState(
-    typeof node.data?.title === 'string' ? node.data.title : node.id
-  );
+  const [editValue, setEditValue] = useState(title);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleEdit = () => {
@@ -31,13 +28,13 @@ const PanelTitle: React.FC<PanelTitleProps> = ({ node, onClose, onRename }) => {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       inputRef.current?.blur();
+      setTitle(editValue);
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     setEditValue(newValue);
-    onRename(newValue);
   };
 
   return (
@@ -54,11 +51,7 @@ const PanelTitle: React.FC<PanelTitleProps> = ({ node, onClose, onRename }) => {
             onKeyDown={handleKeyDown}
           />
         ) : (
-          <h2 className="text-lg font-normal font-inter text-black">
-            {typeof node.data?.title === 'string' || typeof node.data?.title === 'number'
-              ? node.data.title
-              : node.id}
-          </h2>
+          <h2 className="text-lg font-normal font-inter text-black">{title}</h2>
         )}
         <Button
           variant="ghost"

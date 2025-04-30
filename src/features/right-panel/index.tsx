@@ -1,30 +1,34 @@
-import type { Node } from '@xyflow/react';
 import React from 'react';
 
 import { Separator } from '@/components/ui/separator';
 import { LLMS } from '@/const/agents';
+import { NodeType } from '@/const/nodes';
 
 import DesignPanel from './components/agent/design';
 import TestPanel from './components/agent/test';
 import PanelTitle from './components/title';
 import ToolConfigPanel from './components/tool/design';
 interface RightPanelProps {
-  node: Node;
+  nodeData: NodeType;
+  updateNodeData: (data: Partial<NodeType>) => void;
   onClose: () => void;
-  onRename: (newLabel: string) => void;
 }
 
-const RightPanel: React.FC<RightPanelProps> = ({ node, onClose, onRename }) => {
+const RightPanel: React.FC<RightPanelProps> = ({ nodeData, updateNodeData, onClose }) => {
   const [isRunning, setIsRunning] = React.useState(false);
   const [llm, setLlm] = React.useState<(typeof LLMS)[number]['id'] | ''>('');
   const [instructions, setInstructions] = React.useState('');
   const [message, setMessage] = React.useState('');
 
+  const renameNode = (newTitle: string) => {
+    updateNodeData({ name: newTitle });
+  };
+
   return (
     <div className="flex flex-col bg-white min-w-2xl w-2xl border-l border-base-300 ml-auto max-h-screen overflow-y-auto">
-      <PanelTitle node={node} onClose={onClose} onRename={onRename} />
+      <PanelTitle title={nodeData.name} setTitle={renameNode} onClose={onClose} />
       <div className="flex flex-row h-full">
-        {node.data.type === 'tool' ? (
+        {nodeData.type === 'tool' ? (
           <ToolConfigPanel />
         ) : (
           <DesignPanel

@@ -134,16 +134,24 @@ const DnDFlow = () => {
     );
   };
 
-  const handleRename = (newLabel: string) => {
-    console.warn('Renaming node to:', newLabel);
-    // Add your logic here to rename the node
-    setNodes((nds) =>
-      nds.map((node) =>
-        node.id === selectedNode?.id ? { ...node, data: { title: newLabel } } : node
-      )
-    );
-    setSelectedNode((prev) => (prev ? { ...prev, data: { title: newLabel } } : null));
-  };
+  const updateNodeData = useCallback(
+    (nodeId: string, newData: Partial<Node['data']>) => {
+      setNodes((nodes) =>
+        nodes.map((node) =>
+          node.id === nodeId
+            ? {
+                ...node,
+                data: {
+                  ...node.data,
+                  ...newData,
+                },
+              }
+            : node
+        )
+      );
+    },
+    [setNodes]
+  );
 
   return (
     <div className="h-full w-full flex">
@@ -171,7 +179,11 @@ const DnDFlow = () => {
         </ReactFlow>
       </div>
       {selectedNode && (
-        <RightPanel node={selectedNode} onClose={handleUnselect} onRename={handleRename} />
+        <RightPanel
+          nodeData={selectedNode.data as NodeType}
+          onClose={handleUnselect}
+          updateNodeData={(data: Partial<NodeType>) => updateNodeData(selectedNode.id, data)}
+        />
       )}
     </div>
   );
