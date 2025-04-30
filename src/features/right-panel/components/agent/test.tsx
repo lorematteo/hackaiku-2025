@@ -92,7 +92,7 @@ const TestPanel: React.FC<TestPanelProps> = ({
           {isRunning || (isAborted && !isLoading) ? (
             <div
               ref={containerRef}
-              className="w-full min-h-40 max-h-96 overflow-auto bg-white rounded-xs border border-base-300 px-3 py-2"
+              className="w-full min-h-40 h-[calc(100vh-28rem)] overflow-auto bg-white rounded-xs border border-base-300 px-3 py-2"
             >
               {isLoading ? (
                 <LoaderPinwheel className="size-6 animate-spin mx-auto mt-14" />

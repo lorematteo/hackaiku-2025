@@ -1,5 +1,5 @@
-import '@xyflow/react/dist/style.css';
 import '@/index.css';
+import '@xyflow/react/dist/style.css';
 
 import {
   addEdge,
@@ -19,6 +19,7 @@ import { useCallback, useRef, useState } from 'react';
 import { DnDProvider } from '@/context/DnDContext';
 import AnimationControls from '@/features/graph/animated-controls';
 import AnimatedEdge from '@/features/graph/animated-edge';
+import RightPanel from '@/features/right-panel';
 
 import MainAgentNode from './nodes/main-agent';
 
@@ -49,6 +50,7 @@ const DnDFlow = () => {
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const { screenToFlowPosition } = useReactFlow();
   const [isAnimating, setIsAnimating] = useState(false);
+  const [selectedNode, setSelectedNode] = useState<Node | null>(null);
 
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge({ ...params, type: 'animated' }, eds)),
@@ -98,8 +100,23 @@ const DnDFlow = () => {
     [setEdges]
   );
 
+  const onNodeClick = useCallback((_: React.MouseEvent, node: Node) => {
+    setSelectedNode(node);
+  }, []);
+
+  const handleRename = (newLabel: string) => {
+    console.warn('Renaming node to:', newLabel);
+    // Add your logic here to rename the node
+    setNodes((nds) =>
+      nds.map((node) =>
+        node.id === selectedNode?.id ? { ...node, data: { title: newLabel } } : node
+      )
+    );
+    setSelectedNode((prev) => (prev ? { ...prev, data: { title: newLabel } } : null));
+  };
+
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full flex">
       <div className="flex-1 h-full" ref={reactFlowWrapper}>
         <ReactFlow
           nodes={nodes}
@@ -116,12 +133,20 @@ const DnDFlow = () => {
           nodeTypes={nodeTypes}
           fitView
           style={{ width: '100%', height: '100%' }}
+          onNodeClick={onNodeClick}
         >
           <Controls />
           <Background />
           <AnimationControls onToggleAnimation={handleToggleAnimation} />
         </ReactFlow>
       </div>
+      {selectedNode && (
+        <RightPanel
+          node={selectedNode}
+          onClose={() => setSelectedNode(null)}
+          onRename={handleRename}
+        />
+      )}
     </div>
   );
 };
