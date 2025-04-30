@@ -16,11 +16,13 @@ import {
 } from '@xyflow/react';
 import { useCallback, useRef, useState } from 'react';
 
+import { NodeType } from '@/const/nodes';
 import { DnDProvider } from '@/context/DnDContext';
 import AnimationControls from '@/features/graph/animated-controls';
 import AnimatedEdge from '@/features/graph/animated-edge';
 
 import MainAgentNode from './nodes/main-agent';
+import ToolNode from './nodes/tool';
 
 const initialNodes: Node[] = [
   {
@@ -34,7 +36,7 @@ const initialNodes: Node[] = [
 
 // we define the nodeTypes outside of the component to prevent re-renderings
 // you could also use useMemo inside the component
-const nodeTypes = { 'main-agent': MainAgentNode };
+const nodeTypes = { 'main-agent': MainAgentNode, tool: ToolNode };
 
 let id = 0;
 const getId = () => `dndnode_${id++}`;
@@ -64,8 +66,9 @@ const DnDFlow = () => {
     (event: React.DragEvent) => {
       event.preventDefault();
 
-      const nodeType = event.dataTransfer.getData('application/reactflow');
-      if (!nodeType) return;
+      const jsonData = event.dataTransfer.getData('application/reactflow');
+      const nodeData: NodeType = JSON.parse(jsonData) as NodeType;
+      if (!nodeData) return;
 
       const position = screenToFlowPosition({
         x: event.clientX,
@@ -74,9 +77,9 @@ const DnDFlow = () => {
 
       const newNode: Node = {
         id: getId(),
-        type: nodeType,
+        type: nodeData.type,
         position,
-        data: { label: `${nodeType} node` },
+        data: nodeData,
       };
 
       setNodes((nds) => nds.concat(newNode));
