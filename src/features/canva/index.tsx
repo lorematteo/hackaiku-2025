@@ -213,7 +213,11 @@ const DnDFlow = () => {
     <div className="h-full w-full flex">
       <div className="flex-1 h-full" ref={reactFlowWrapper}>
         <ReactFlow
-          nodes={nodes}
+          nodes={nodes.map((n) =>
+            n.data.type === 'main-agent'
+              ? { ...n, data: { ...n.data, nodeCount: nodes.length } }
+              : n
+          )}
           edges={edges.map((edge) => ({
             ...edge,
             data: { ...edge.data, isAnimating },
