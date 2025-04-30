@@ -50,14 +50,13 @@ const RightPanel: React.FC<RightPanelProps> = ({
             isRunning={isRunning}
           />
         )}
-        {nodeData.type === 'agent' ||
-          (nodeData.type === 'main-agent' && (
-            <AgentDesignPanel
-              config={config as AgentConfig}
-              updateConfig={updateNodeConfig}
-              isRunning={isRunning}
-            />
-          ))}
+        {(nodeData.type === 'agent' || nodeData.type === 'main-agent') && (
+          <AgentDesignPanel
+            config={config as AgentConfig}
+            updateConfig={updateNodeConfig}
+            isRunning={isRunning}
+          />
+        )}
         {nodeData.type === 'llm' && (
           <LLMDesignPanel
             config={config as LLMConfig}
