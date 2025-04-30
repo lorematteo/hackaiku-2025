@@ -54,7 +54,7 @@ const DnDFlow = () => {
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const { screenToFlowPosition } = useReactFlow();
   const [isAnimating, setIsAnimating] = useState(false);
-  const [selectedNode, setSelectedNode] = useState<Node | null>(null);
+  const [selectedNode, setSelectedNode] = useState<string>('');
 
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge({ ...params, type: 'animated' }, eds)),
@@ -107,7 +107,7 @@ const DnDFlow = () => {
 
   const onNodeClick = useCallback(
     (_: React.MouseEvent, node: Node) => {
-      setSelectedNode(node);
+      setSelectedNode(node.id);
       setNodes((nds) =>
         nds.map((n) => ({
           ...n,
@@ -122,7 +122,7 @@ const DnDFlow = () => {
   );
 
   const handleUnselect = () => {
-    setSelectedNode(null);
+    setSelectedNode('');
     setNodes((nds) =>
       nds.map((n) => ({
         ...n,
@@ -180,9 +180,9 @@ const DnDFlow = () => {
       </div>
       {selectedNode && (
         <RightPanel
-          nodeData={selectedNode.data as NodeType}
+          nodeData={nodes.find((node) => node.id === selectedNode)?.data as NodeType | null}
           onClose={handleUnselect}
-          updateNodeData={(data: Partial<NodeType>) => updateNodeData(selectedNode.id, data)}
+          updateNodeData={(data: Partial<NodeType>) => updateNodeData(selectedNode, data)}
         />
       )}
     </div>

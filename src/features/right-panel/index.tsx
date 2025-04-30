@@ -9,7 +9,7 @@ import TestPanel from './components/agent/test';
 import PanelTitle from './components/title';
 import ToolConfigPanel from './components/tool/design';
 interface RightPanelProps {
-  nodeData: NodeType;
+  nodeData: NodeType | null;
   updateNodeData: (data: Partial<NodeType>) => void;
   onClose: () => void;
 }
@@ -23,6 +23,10 @@ const RightPanel: React.FC<RightPanelProps> = ({ nodeData, updateNodeData, onClo
   const renameNode = (newTitle: string) => {
     updateNodeData({ name: newTitle });
   };
+
+  if (!nodeData) {
+    return null;
+  }
 
   return (
     <div className="flex flex-col bg-white min-w-2xl w-2xl border-l border-base-300 ml-auto max-h-screen overflow-y-auto">
