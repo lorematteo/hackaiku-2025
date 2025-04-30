@@ -13,7 +13,7 @@ const AgentNode: React.FC<NodeProps<AgentNodeType>> = ({ data, isConnectable }) 
         <p>{data.name}</p>
       </div>
       <Handle
-        type="source"
+        type="target"
         className="!bg-gray-400 !size-2 rounded-full"
         position={Position.Left}
         isConnectable={isConnectable}

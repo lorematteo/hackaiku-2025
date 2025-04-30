@@ -15,25 +15,29 @@ const MainAgentNode: React.FC<NodeProps<MainAgentNodeType>> = ({ data, isConnect
         <p>{data.title}</p>
       </div>
       <Handle
-        type="target"
+        type="source"
+        id="top"
         className="!bg-pink-base !size-3 rounded-full"
         position={Position.Top}
         isConnectable={isConnectable}
       />
       <Handle
-        type="target"
+        type="source"
+        id="left"
         className="!bg-pink-base !size-3 rounded-full"
         position={Position.Left}
         isConnectable={isConnectable}
       />
       <Handle
         type="source"
+        id="right"
         className="!bg-pink-base !size-3 rounded-full"
         position={Position.Right}
         isConnectable={isConnectable}
       />
       <Handle
         type="source"
+        id="bottom"
         className="!bg-pink-base !size-3 rounded-full"
         position={Position.Bottom}
         isConnectable={isConnectable}
