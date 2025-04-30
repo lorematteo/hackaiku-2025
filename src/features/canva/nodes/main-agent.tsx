@@ -54,14 +54,14 @@ const MainAgentNode: React.FC<NodeProps<MainAgentNodeType>> = ({ data, isConnect
         <>
           {/* TOP */}
           <div className="absolute left-1/2 -translate-x-1/2 -top-17 flex flex-col items-center">
-            <div className="px-4 py-2 rounded-lg border border-gray-200 text-gray-400 bg-white text-sm select-none whitespace-nowrap">
+            <div className="px-4 py-2 rounded-lg border border-gray-200 text-gray-400 bg-white text-sm select-none whitespace-nowrap border-dashed">
               Drop a Node
             </div>
             <div className="h-6 border-l-2 border-dashed border-gray-300" />
           </div>
           {/* LEFT */}
           <div className="absolute top-1/2 -translate-y-1/2 -left-36 flex items-center">
-            <div className="px-4 py-2 rounded-lg border border-gray-200 text-gray-400 bg-white text-sm select-none whitespace-nowrap">
+            <div className="px-4 py-2 rounded-lg border border-gray-200 text-gray-400 bg-white text-sm select-none whitespace-nowrap border-dashed">
               Drop a Node
             </div>
             <div className="w-6 border-t-2 border-dashed border-gray-300" />
@@ -69,14 +69,14 @@ const MainAgentNode: React.FC<NodeProps<MainAgentNodeType>> = ({ data, isConnect
           {/* BOTTOM */}
           <div className="absolute left-1/2 -translate-x-1/2 -bottom-17 flex flex-col items-center">
             <div className="h-6 border-l-2 border-dashed border-gray-300" />
-            <div className="px-4 py-2 rounded-lg border border-gray-200 text-gray-400 bg-white text-sm select-none whitespace-nowrap">
+            <div className="px-4 py-2 rounded-lg border border-gray-200 text-gray-400 bg-white text-sm select-none whitespace-nowrap border-dashed">
               Drop a Node
             </div>
           </div>
           {/* RIGHT */}
           <div className="absolute top-1/2 -translate-y-1/2 -right-36 flex items-center">
             <div className="w-6 border-t-2 border-dashed border-gray-300" />
-            <div className="px-4 py-2 rounded-lg border border-gray-200 text-gray-400 bg-white text-sm select-none whitespace-nowrap">
+            <div className="px-4 py-2 rounded-lg border border-gray-200 text-gray-400 bg-white text-sm select-none whitespace-nowrap border-dashed">
               Drop a Node
             </div>
           </div>
