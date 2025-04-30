@@ -9,7 +9,7 @@ type MainAgentNodeType = Node<MainAgentNodeData, 'main-agent'>;
 const MainAgentNode: React.FC<NodeProps<MainAgentNodeType>> = ({ data, isConnectable }) => {
   return (
     <div
-      className={`border border-pink-base rounded-lg px-5 py-4 ${data.selected ? 'bg-pink-base/20' : 'bg-white'} transition-colors`}
+      className={`border border-pink-base rounded-lg px-5 py-4 ${data.isSelected ? 'bg-pink-base/20' : 'bg-white'} transition-colors`}
     >
       <div className="flex flex-row gap-4 items-center justify-center">
         <div className="p-2 bg-pink-base flex items-center justify-center rotate-45">

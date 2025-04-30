@@ -113,7 +113,7 @@ const DnDFlow = () => {
           ...n,
           data: {
             ...n.data,
-            selected: n.id === node.id, // Only selected node gets true
+            isSelected: n.id === node.id, // Only selected node gets true
           },
         }))
       );

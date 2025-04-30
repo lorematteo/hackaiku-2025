@@ -4,7 +4,7 @@ export type NodeType = {
   name: string;
   desc: string;
   icon: string;
-  selected?: boolean;
+  isSelected?: boolean;
 };
 
 export const MAIN_AGENT: NodeType = {
