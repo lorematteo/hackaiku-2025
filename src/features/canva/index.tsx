@@ -28,6 +28,7 @@ const initialNodes: Node[] = [
     type: 'main-agent',
     data: { title: 'Main Agent' },
     position: { x: 0, y: 0 },
+    draggable: false,
   },
 ];
 
