@@ -3,8 +3,9 @@ import React from 'react';
 import { Separator } from '@/components/ui/separator';
 import { NodeType } from '@/const/nodes';
 
-import DesignPanel from './components/agent/design';
+import AgentDesignPanel from './components/agent/design';
 import TestPanel from './components/agent/test';
+import LLMDesignPanel from './components/llm/design';
 import PanelTitle from './components/title';
 import ToolConfigPanel from './components/tool/design';
 interface RightPanelProps {
@@ -42,13 +43,21 @@ const RightPanel: React.FC<RightPanelProps> = ({
         onClose={onClose}
       />
       <div className="flex flex-row h-full">
-        {nodeData.type === 'tool' ? (
-          <ToolConfigPanel />
-        ) : (
-          <DesignPanel
+        {nodeData.type === 'tool' && <ToolConfigPanel />}
+        {nodeData.type === 'agent' && (
+          <AgentDesignPanel
             isRunning={isRunning}
             llm={config.llm}
             setLlm={(newLlm) => updateNodeConfig({ llm: newLlm })}
+            instructions={config.instructions}
+            setInstructions={(newInstructions) =>
+              updateNodeConfig({ instructions: newInstructions })
+            }
+          />
+        )}
+        {nodeData.type === 'llm' && (
+          <LLMDesignPanel
+            isRunning={isRunning}
             instructions={config.instructions}
             setInstructions={(newInstructions) =>
               updateNodeConfig({ instructions: newInstructions })
