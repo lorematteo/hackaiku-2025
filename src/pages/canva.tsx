@@ -15,10 +15,9 @@ import {
 } from '@xyflow/react';
 import { useCallback, useRef, useState } from 'react';
 
-import Sidebar from '../components/Sidebar';
-import { DnDProvider, useDnD } from '../context/DnDContext';
-import AnimationControls from '../features/graph/animated-controls';
-import AnimatedEdge from '../features/graph/animated-edge';
+import { DnDProvider } from '@/context/DnDContext';
+import AnimationControls from '@/features/graph/animated-controls';
+import AnimatedEdge from '@/features/graph/animated-edge';
 
 const initialNodes: Node[] = [
   {
@@ -41,7 +40,6 @@ const DnDFlow = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const { screenToFlowPosition } = useReactFlow();
-  const [type] = useDnD();
   const [isAnimating, setIsAnimating] = useState(false);
 
   const onConnect = useCallback(
@@ -58,9 +56,8 @@ const DnDFlow = () => {
     (event: React.DragEvent) => {
       event.preventDefault();
 
-      if (!type) {
-        return;
-      }
+      const nodeType = event.dataTransfer.getData('application/reactflow');
+      if (!nodeType) return;
 
       const position = screenToFlowPosition({
         x: event.clientX,
@@ -69,14 +66,14 @@ const DnDFlow = () => {
 
       const newNode: Node = {
         id: getId(),
-        type,
+        type: nodeType,
         position,
-        data: { label: `${type} node` },
+        data: { label: `${nodeType} node` },
       };
 
       setNodes((nds) => nds.concat(newNode));
     },
-    [screenToFlowPosition, type, setNodes]
+    [screenToFlowPosition, setNodes]
   );
 
   const handleToggleAnimation = useCallback(
@@ -94,7 +91,7 @@ const DnDFlow = () => {
   );
 
   return (
-    <div className="flex h-screen">
+    <div className="h-full w-full">
       <div className="flex-1 h-full" ref={reactFlowWrapper}>
         <ReactFlow
           nodes={nodes}
@@ -116,7 +113,6 @@ const DnDFlow = () => {
           <AnimationControls onToggleAnimation={handleToggleAnimation} />
         </ReactFlow>
       </div>
-      <Sidebar />
     </div>
   );
 };
