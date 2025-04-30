@@ -1,18 +1,14 @@
 import clsx from 'clsx';
 
-export function NodeItem({
-  label,
-  desc,
-  icon,
-  type,
-  onDragStart,
-}: {
-  label: string;
-  desc: string;
-  icon?: React.ReactNode;
-  type: string;
-  onDragStart: (event: React.DragEvent, type: string) => void;
-}) {
+import NodeIcon from '@/components/node-icons';
+import { NodeType } from '@/const/nodes';
+
+interface NodeItemProps {
+  data: NodeType;
+  onDragStart: (event: React.DragEvent, data: NodeType) => void;
+}
+
+const NodeItem: React.FC<NodeItemProps> = ({ data, onDragStart }) => {
   return (
     <div
       className={clsx(
@@ -20,13 +16,17 @@ export function NodeItem({
         'hover:bg-accent cursor-move transition-colors'
       )}
       draggable
-      onDragStart={(e) => onDragStart(e, type)}
+      onDragStart={(e) => onDragStart(e, data)}
     >
       <div className="flex items-center gap-3">
-        <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center">{icon}</div>
-        <div className="font-semibold text-sm text-foreground">{label}</div>
+        <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center">
+          <NodeIcon name={data.icon} />
+        </div>
+        <div className="font-semibold text-sm text-foreground">{data.name}</div>
       </div>
-      <div className="text-xs text-muted-foreground mt-2">{desc}</div>
+      <div className="text-xs text-muted-foreground mt-2">{data.desc}</div>
     </div>
   );
-}
+};
+
+export default NodeItem;

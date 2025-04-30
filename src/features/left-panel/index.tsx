@@ -3,17 +3,17 @@ import { useState } from 'react';
 
 import { Input } from '@/components/ui/input';
 import { DSSLeftPanelMenus } from '@/const/dss-left-panel';
-import { NODES } from '@/const/nodes';
+import { NODES, NodeType } from '@/const/nodes';
 import { MenuItem } from '@/features/left-panel/components/menu-item';
-import { NodeItem } from '@/features/left-panel/components/node-item';
+import NodeItem from '@/features/left-panel/components/node-item';
 
 export const LeftPanel = () => {
   const [selectedMenu, setSelectedMenu] = useState<null | string>(null);
 
-  const handleDragStart = (event: React.DragEvent, type: string) => {
-    event.dataTransfer.setData('application/reactflow', type);
+  const handleDragStart = (event: React.DragEvent, data: NodeType) => {
+    const jsonString = JSON.stringify(data);
+    event.dataTransfer.setData('application/reactflow', jsonString);
     event.dataTransfer.effectAllowed = 'move';
-    // Optionnel: setType(type) si tu utilises un context
   };
 
   return (
@@ -55,14 +55,7 @@ export const LeftPanel = () => {
         <div className="flex flex-col h-full">
           <div className="flex-1 overflow-y-auto p-2 flex flex-col gap-2">
             {NODES[selectedMenu as keyof typeof NODES].map((node) => (
-              <NodeItem
-                key={node.id}
-                label={node.name}
-                desc={node.desc}
-                icon={node.icon}
-                type={node.id}
-                onDragStart={handleDragStart}
-              />
+              <NodeItem key={node.id} data={node} onDragStart={handleDragStart} />
             ))}
           </div>
         </div>
