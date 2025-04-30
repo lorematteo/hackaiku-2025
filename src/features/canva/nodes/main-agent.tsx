@@ -1,8 +1,10 @@
-import { Handle, Node, NodeProps, Position } from '@xyflow/react';
+import { Handle, type Node, type NodeProps, Position } from '@xyflow/react';
 
 import AIAgentIcon from '@/assets/icons/ai-agent';
+import ProcessStateIcon from '@/assets/icons/process-state';
+import type { NodeType } from '@/const/nodes';
 
-type MainAgentNodeData = { title: string };
+type MainAgentNodeData = NodeType & { title: string };
 type MainAgentNodeType = Node<MainAgentNodeData, 'main-agent'>;
 
 const MainAgentNode: React.FC<NodeProps<MainAgentNodeType>> = ({ data, isConnectable }) => {
@@ -13,6 +15,7 @@ const MainAgentNode: React.FC<NodeProps<MainAgentNodeType>> = ({ data, isConnect
           <AIAgentIcon className="size-5 text-white -rotate-45" />
         </div>
         <p>{data.title}</p>
+        {data.processState && <ProcessStateIcon state={data.processState} />}
       </div>
       <Handle
         type="source"

@@ -1,7 +1,8 @@
-import { Handle, Node, NodeProps, Position } from '@xyflow/react';
+import { Handle, type Node, type NodeProps, Position } from '@xyflow/react';
 
+import ProcessStateIcon from '@/assets/icons/process-state';
 import NodeIcon from '@/components/node-icons';
-import { NodeType } from '@/const/nodes';
+import type { NodeType } from '@/const/nodes';
 
 type AgentNodeType = Node<NodeType, 'agent'>;
 
@@ -11,6 +12,7 @@ const AgentNode: React.FC<NodeProps<AgentNodeType>> = ({ data, isConnectable, id
       <div className="flex flex-row gap-2 items-center justify-center">
         <NodeIcon name={data.icon} />
         <p>{data.name}</p>
+        {data.processState && <ProcessStateIcon state={data.processState} />}
       </div>
       {/* Left handles superposés */}
       <Handle

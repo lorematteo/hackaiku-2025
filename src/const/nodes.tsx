@@ -4,7 +4,7 @@ export type NodeType = {
   name: string;
   desc: string;
   icon: string;
-  processState?: 'waiting' | 'processing' | 'complete';
+  processState?: 'waiting' | 'processing' | 'complete' | 'warning' | 'error';
 };
 
 export const NODES: {

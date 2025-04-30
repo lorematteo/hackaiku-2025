@@ -35,10 +35,19 @@ export const propagateAnimation = async (
 
     await new Promise((res) => setTimeout(res, delay));
 
-    // Passe à complete
+    // Détermine le nouvel état avec probabilité
+    let newState = 'complete';
+    const rand = Math.random();
+    if (rand < 0.1) {
+      newState = 'error';
+    } else if (rand < 0.2) {
+      newState = 'warning';
+    }
+
+    // Passe à complete, error ou warning
     setNodes((nds) =>
       nds.map((node) =>
-        node.id === currentId ? { ...node, data: { ...node.data, processState: 'complete' } } : node
+        node.id === currentId ? { ...node, data: { ...node.data, processState: newState } } : node
       )
     );
 
