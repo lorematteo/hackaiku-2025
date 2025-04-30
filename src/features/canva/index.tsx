@@ -121,6 +121,19 @@ const DnDFlow = () => {
     [setNodes]
   );
 
+  const handleUnselect = () => {
+    setSelectedNode(null);
+    setNodes((nds) =>
+      nds.map((n) => ({
+        ...n,
+        data: {
+          ...n.data,
+          isSelected: false, // Reset all nodes to not selected
+        },
+      }))
+    );
+  };
+
   const handleRename = (newLabel: string) => {
     console.warn('Renaming node to:', newLabel);
     // Add your logic here to rename the node
@@ -158,11 +171,7 @@ const DnDFlow = () => {
         </ReactFlow>
       </div>
       {selectedNode && (
-        <RightPanel
-          node={selectedNode}
-          onClose={() => setSelectedNode(null)}
-          onRename={handleRename}
-        />
+        <RightPanel node={selectedNode} onClose={handleUnselect} onRename={handleRename} />
       )}
     </div>
   );
