@@ -1,13 +1,8 @@
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+
+import { ExportDialog } from './components/export-dialog';
 
 interface AnimationControlsProps {
   onToggleAnimation: (isAnimating: boolean) => void;
@@ -30,26 +25,7 @@ export default function AnimationControls({ onToggleAnimation }: AnimationContro
       </Button>
       <Button onClick={() => setIsModalOpen(true)}>Export</Button>
 
-      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Export</DialogTitle>
-          </DialogHeader>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setIsModalOpen(false)}>
-              Cancel
-            </Button>
-            <Button
-              onClick={() => {
-                // Add export logic here
-                setIsModalOpen(false);
-              }}
-            >
-              Export
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <ExportDialog isOpen={isModalOpen} onOpenChange={setIsModalOpen} />
     </div>
   );
 }
