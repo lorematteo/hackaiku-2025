@@ -22,6 +22,7 @@ import AnimationControls from '@/features/graph/animated-controls';
 import AnimatedEdge from '@/features/graph/animated-edge';
 import RightPanel from '@/features/right-panel';
 
+import { meetingPrepNodes } from './complex/meeting-prep';
 import AgentNode from './nodes/agent';
 import LLMNode from './nodes/llm';
 import MainAgentNode from './nodes/main-agent';
@@ -86,6 +87,14 @@ const DnDFlow = () => {
         y: event.clientY,
       });
 
+      if (nodeData.id === 'meeting-prep') {
+        const { nodes: meetingNodes, edges: meetingEdges } = meetingPrepNodes(getId());
+        setNodes((nds) => nds.concat(meetingNodes));
+        setEdges((eds) => eds.concat(meetingEdges));
+
+        return;
+      }
+
       const newNode: Node = {
         id: getId(),
         type: nodeData.type,
@@ -95,7 +104,7 @@ const DnDFlow = () => {
 
       setNodes((nds) => nds.concat(newNode));
     },
-    [screenToFlowPosition, setNodes]
+    [screenToFlowPosition, setNodes, setEdges]
   );
 
   const handleToggleAnimation = useCallback(

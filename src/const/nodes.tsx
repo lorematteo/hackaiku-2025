@@ -88,6 +88,17 @@ export const NODES: {
   ],
   agents: [
     {
+      id: 'meeting-prep',
+      type: 'agent',
+      name: 'Meeting Prep',
+      desc: 'Prepare a meeting, return any information you have and search the knowledge base for any project that could be related',
+      icon: 'agent',
+      config: {
+        llm: 'openai',
+        instructions: '',
+      },
+    },
+    {
       id: 'text-summarization',
       type: 'agent',
       name: 'Text Summarization',
