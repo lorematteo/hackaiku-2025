@@ -7,7 +7,9 @@ type LLMNodeType = Node<NodeType, 'llm'>;
 
 const LLMNode: React.FC<NodeProps<LLMNodeType>> = ({ data, isConnectable }) => {
   return (
-    <div className="bg-white border rounded-full px-3 py-2 border-gray-300">
+    <div
+      className={`border rounded-full px-3 py-2 border-gray-300 ${data.isSelected ? 'bg-purple-base/20' : 'bg-white'} transition-colors`}
+    >
       <div className="flex flex-row gap-2 items-center justify-center">
         <NodeIcon name={data.icon} />
         <p>{data.name}</p>

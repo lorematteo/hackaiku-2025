@@ -89,6 +89,14 @@ const NodeIcon: React.FC<NodeIconProps> = ({ name, className }) => {
       return (
         <img src="./src/assets/logo/meta.png" alt="Meta" className={cn('size-6 p-1', className)} />
       );
+    case 'slack':
+      return (
+        <img
+          src="./src/assets/logo/slack.png"
+          alt="Slack"
+          className={cn('size-6 p-1', className)}
+        />
+      );
   }
 
   return <div>Not found</div>;
