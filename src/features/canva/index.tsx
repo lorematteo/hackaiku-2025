@@ -21,6 +21,7 @@ import { DnDProvider } from '@/context/DnDContext';
 import AnimationControls from '@/features/graph/animated-controls';
 import AnimatedEdge from '@/features/graph/animated-edge';
 
+import AgentNode from './nodes/agent';
 import MainAgentNode from './nodes/main-agent';
 import ToolNode from './nodes/tool';
 
@@ -36,7 +37,7 @@ const initialNodes: Node[] = [
 
 // we define the nodeTypes outside of the component to prevent re-renderings
 // you could also use useMemo inside the component
-const nodeTypes = { 'main-agent': MainAgentNode, tool: ToolNode };
+const nodeTypes = { 'main-agent': MainAgentNode, tool: ToolNode, agent: AgentNode };
 
 let id = 0;
 const getId = () => `dndnode_${id++}`;

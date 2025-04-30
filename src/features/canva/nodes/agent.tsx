@@ -3,11 +3,11 @@ import { Handle, Node, NodeProps, Position } from '@xyflow/react';
 import NodeIcon from '@/components/node-icons';
 import { NodeType } from '@/const/nodes';
 
-type ToolNodeType = Node<NodeType, 'tool'>;
+type AgentNodeType = Node<NodeType, 'agent'>;
 
-const ToolNode: React.FC<NodeProps<ToolNodeType>> = ({ data, isConnectable }) => {
+const AgentNode: React.FC<NodeProps<AgentNodeType>> = ({ data, isConnectable }) => {
   return (
-    <div className="bg-white border rounded-full px-3 py-2 border-gray-300">
+    <div className="bg-white border rounded-full px-3 py-3 border-gray-300">
       <div className="flex flex-row gap-2 items-center justify-center">
         <NodeIcon name={data.icon} />
         <p>{data.name}</p>
@@ -28,4 +28,4 @@ const ToolNode: React.FC<NodeProps<ToolNodeType>> = ({ data, isConnectable }) =>
   );
 };
 
-export default ToolNode;
+export default AgentNode;
