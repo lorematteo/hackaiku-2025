@@ -6,7 +6,6 @@ function Home() {
     <div className="bg-zinc-50 h-screen flex flex-row">
       <LeftPanel />
       <Canva />
-      {/* <RightPanel /> */}
     </div>
   );
 }

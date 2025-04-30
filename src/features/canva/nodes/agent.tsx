@@ -8,7 +8,9 @@ type AgentNodeType = Node<NodeType, 'agent'>;
 
 const AgentNode: React.FC<NodeProps<AgentNodeType>> = ({ data, isConnectable, id }) => {
   return (
-    <div className="bg-white border rounded-full px-3 py-3 border-gray-300">
+    <div
+      className={`border rounded-full px-3 py-3 border-gray-300 ${data.isSelected ? 'bg-pink-base/20' : 'bg-white'} transition-colors`}
+    >
       <div className="flex flex-row gap-2 items-center justify-center">
         <NodeIcon name={data.icon} />
         <p>{data.name}</p>

@@ -1,6 +1,7 @@
 import { ChevronLeft, Search } from 'lucide-react';
 import { useState } from 'react';
 
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { DSSLeftPanelMenus } from '@/const/dss-left-panel';
 import { NODES, NodeType } from '@/const/nodes';
@@ -17,18 +18,15 @@ export const LeftPanel = () => {
   };
 
   return (
-    <aside className="min-w-3xs h-full border-r bg-white flex flex-col">
-      <div className="p-2">
+    <aside className="min-w-3xs w-3xs h-full border-r bg-white flex flex-col">
+      <div className="p-2 flex flex-col gap-2 items-start">
         {selectedMenu && (
-          <button
-            className="mb-2 p-1 rounded hover:bg-accent flex items-center gap-2"
-            onClick={() => setSelectedMenu(null)}
-          >
+          <Button variant="ghost" onClick={() => setSelectedMenu(null)}>
             <ChevronLeft size={16} />
             <span>Back</span>
-          </button>
+          </Button>
         )}
-        <div className="relative mb-2">
+        <div className="w-full relative">
           <span className="absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground">
             <Search size={16} />
           </span>

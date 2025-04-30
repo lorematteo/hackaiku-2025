@@ -6,25 +6,15 @@ import { Label } from '@/components/ui/label';
 import LLMOutput from '@/components/ui/llm-output';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
-import { LLMS, SAMPLE_OUTPUT } from '@/const/agents';
+import { SAMPLE_OUTPUT } from '@/const/agents';
 
 interface TestPanelProps {
   isRunning: boolean;
   setIsRunning: React.Dispatch<React.SetStateAction<boolean>>;
-  message: string;
-  setMessage: React.Dispatch<React.SetStateAction<string>>;
-  llm: (typeof LLMS)[number]['id'] | '';
-  instructions: string;
 }
 
-const TestPanel: React.FC<TestPanelProps> = ({
-  isRunning,
-  setIsRunning,
-  message,
-  setMessage,
-  llm,
-  instructions,
-}) => {
+const TestPanel: React.FC<TestPanelProps> = ({ isRunning, setIsRunning }) => {
+  const [message, setMessage] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [isAborted, setIsAborted] = React.useState(false);
@@ -64,7 +54,7 @@ const TestPanel: React.FC<TestPanelProps> = ({
         />
         <div className="flex justify-end">
           <Button
-            disabled={!isRunning && (!llm || !instructions || !message)}
+            disabled={!isRunning && !message}
             className="w-auto hover:cursor-pointer"
             variant="outline"
             onClick={handleClick}
@@ -92,7 +82,7 @@ const TestPanel: React.FC<TestPanelProps> = ({
           {isRunning || (isAborted && !isLoading) ? (
             <div
               ref={containerRef}
-              className="w-full min-h-40 max-h-96 overflow-auto bg-white rounded-xs border border-base-300 px-3 py-2"
+              className="w-full min-h-40 h-[calc(100vh-28rem)] overflow-auto bg-white rounded-xs border border-base-300 px-3 py-2"
             >
               {isLoading ? (
                 <LoaderPinwheel className="size-6 animate-spin mx-auto mt-14" />

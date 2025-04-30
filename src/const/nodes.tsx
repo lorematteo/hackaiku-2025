@@ -5,6 +5,36 @@ export type NodeType = {
   desc: string;
   icon: string;
   processState?: 'waiting' | 'processing' | 'complete' | 'warning' | 'error';
+  config?: AgentConfig | ToolConfig;
+  isSelected?: boolean;
+};
+
+export type AgentConfig = {
+  llm: string;
+  instructions: string;
+};
+
+export type LLMConfig = {
+  instructions: string;
+};
+
+export type ToolConfig = {
+  'llm-agent'?: string;
+  purpose?: string;
+  'system-prompt'?: string;
+  integration?: string;
+  authorization?: string;
+  channel?: string;
+  username?: string;
+  'additional-description'?: string;
+};
+
+export const MAIN_AGENT: NodeType = {
+  id: 'main-agent',
+  type: 'main-agent',
+  name: 'Main Agent',
+  desc: 'The main agent that coordinates the other agents and tools',
+  icon: 'agent',
 };
 
 export const NODES: {
@@ -58,18 +88,26 @@ export const NODES: {
   ],
   agents: [
     {
-      id: 'agent-1',
+      id: 'text-summarization',
       type: 'agent',
-      name: 'Agent 1',
-      desc: 'Description for Agent 1',
+      name: 'Text Summarization',
+      desc: 'Summarize a text',
       icon: 'agent',
+      config: {
+        llm: 'anthropic',
+        instructions: 'Summarize the text',
+      },
     },
     {
-      id: 'agent-2',
+      id: 'text-classification',
       type: 'agent',
-      name: 'Agent 2',
-      desc: 'Description for Agent 2',
+      name: 'Text Classification',
+      desc: 'Classify a text into categories',
       icon: 'agent',
+      config: {
+        llm: 'meta',
+        instructions: 'Classify the text into categories',
+      },
     },
   ],
   llm: [

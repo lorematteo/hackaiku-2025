@@ -1,21 +1,12 @@
-import NodeIcon from '@/components/node-icons';
 import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
-import { LLMS } from '@/const/agents';
-import { AgentConfig } from '@/const/nodes';
+import { LLMConfig } from '@/const/nodes';
 
 interface DesignPanelProps {
   isRunning: boolean;
-  config: AgentConfig;
-  updateConfig: (config: Partial<AgentConfig>) => void;
+  config: LLMConfig;
+  updateConfig: (config: Partial<LLMConfig>) => void;
 }
 
 const DesignPanel: React.FC<DesignPanelProps> = ({ config, updateConfig, isRunning }) => {
@@ -29,26 +20,6 @@ const DesignPanel: React.FC<DesignPanelProps> = ({ config, updateConfig, isRunni
         </TabsList>
         <TabsContent value="settings">
           <div className="flex flex-col gap-4 py-4">
-            <div className="flex flex-col gap-2">
-              <Label>Large Language Model*</Label>
-              <Select
-                disabled={isRunning}
-                value={config.llm}
-                onValueChange={(value) => updateConfig({ llm: value })}
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select an LLM" />
-                </SelectTrigger>
-                <SelectContent>
-                  {LLMS.map((llm) => (
-                    <SelectItem key={llm.id} value={llm.id}>
-                      <NodeIcon name={llm.logo} className="size-4 p-0 mr-1" />
-                      {llm.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
             <div className="flex flex-col gap-2 max-h-96">
               <Label>Instructions*</Label>
               <Textarea

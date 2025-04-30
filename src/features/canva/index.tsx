@@ -16,10 +16,11 @@ import {
 } from '@xyflow/react';
 import { useCallback, useRef, useState } from 'react';
 
-import type { NodeType } from '@/const/nodes';
+import { MAIN_AGENT, type NodeType } from '@/const/nodes';
 import { DnDProvider } from '@/context/DnDContext';
 import AnimationControls from '@/features/graph/animated-controls';
 import AnimatedEdge from '@/features/graph/animated-edge';
+import RightPanel from '@/features/right-panel';
 
 import AgentNode from './nodes/agent';
 import LLMNode from './nodes/llm';
@@ -31,7 +32,7 @@ const initialNodes: Node[] = [
   {
     id: '1',
     type: 'main-agent',
-    data: { title: 'Main Agent' },
+    data: MAIN_AGENT,
     position: { x: 0, y: 0 },
     draggable: false,
   },
@@ -59,6 +60,7 @@ const DnDFlow = () => {
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const { screenToFlowPosition } = useReactFlow();
   const [isAnimating, setIsAnimating] = useState(false);
+  const [selectedNode, setSelectedNode] = useState<string>('');
 
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge({ ...params, type: 'animated' }, eds)),
@@ -127,8 +129,78 @@ const DnDFlow = () => {
     [setEdges, setNodes, edges]
   );
 
+  const onNodeClick = useCallback(
+    (_: React.MouseEvent, node: Node) => {
+      setSelectedNode(node.id);
+      setNodes((nds) =>
+        nds.map((n) => ({
+          ...n,
+          data: {
+            ...n.data,
+            isSelected: n.id === node.id, // Only selected node gets true
+          },
+        }))
+      );
+    },
+    [setNodes]
+  );
+
+  const handleUnselect = () => {
+    setSelectedNode('');
+    setNodes((nds) =>
+      nds.map((n) => ({
+        ...n,
+        data: {
+          ...n.data,
+          isSelected: false, // Reset all nodes to not selected
+        },
+      }))
+    );
+  };
+
+  const updateNodeData = useCallback(
+    (nodeId: string, newData: Partial<Node['data']>) => {
+      setNodes((nodes) =>
+        nodes.map((node) =>
+          node.id === nodeId
+            ? {
+                ...node,
+                data: {
+                  ...node.data,
+                  ...newData,
+                },
+              }
+            : node
+        )
+      );
+    },
+    [setNodes]
+  );
+
+  const updateNodeConfig = useCallback(
+    (nodeId: string, newConfig: Partial<NodeType['config']>) => {
+      setNodes((nodes) =>
+        nodes.map((node) =>
+          node.id === nodeId
+            ? {
+                ...node,
+                data: {
+                  ...node.data,
+                  config: {
+                    ...(node.data.config || {}),
+                    ...newConfig,
+                  },
+                },
+              }
+            : node
+        )
+      );
+    },
+    [setNodes]
+  );
+
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full flex">
       <div className="flex-1 h-full" ref={reactFlowWrapper}>
         <ReactFlow
           nodes={nodes}
@@ -145,12 +217,23 @@ const DnDFlow = () => {
           nodeTypes={nodeTypes}
           fitView
           style={{ width: '100%', height: '100%' }}
+          onNodeClick={onNodeClick}
         >
           <Controls />
           <Background />
           <AnimationControls onToggleAnimation={handleToggleAnimation} />
         </ReactFlow>
       </div>
+      {selectedNode && (
+        <RightPanel
+          nodeData={nodes.find((node) => node.id === selectedNode)?.data as NodeType | null}
+          onClose={handleUnselect}
+          updateNodeData={(data: Partial<NodeType>) => updateNodeData(selectedNode, data)}
+          updateNodeConfig={(config: Partial<NodeType['config']>) =>
+            updateNodeConfig(selectedNode, config)
+          }
+        />
+      )}
     </div>
   );
 };
