@@ -35,7 +35,12 @@ const RightPanel: React.FC<RightPanelProps> = ({
 
   return (
     <div className="flex flex-col bg-white min-w-2xl w-2xl border-l border-base-300 ml-auto max-h-screen overflow-y-auto">
-      <PanelTitle title={nodeData.name} setTitle={renameNode} onClose={onClose} />
+      <PanelTitle
+        icon={nodeData.icon}
+        title={nodeData.name}
+        setTitle={renameNode}
+        onClose={onClose}
+      />
       <div className="flex flex-row h-full">
         {nodeData.type === 'tool' ? (
           <ToolConfigPanel />

@@ -1,17 +1,18 @@
 import { XIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
 
-import AIAgentIcon from '@/assets/icons/ai-agent';
 import PenIcon from '@/assets/icons/pen';
+import NodeIcon from '@/components/node-icons';
 import { Button } from '@/components/ui/button';
 
 interface PanelTitleProps {
+  icon: string;
   title: string;
   setTitle: (title: string) => void;
   onClose: () => void;
 }
 
-const PanelTitle: React.FC<PanelTitleProps> = ({ title, setTitle, onClose }) => {
+const PanelTitle: React.FC<PanelTitleProps> = ({ icon, title, setTitle, onClose }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(title);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -40,7 +41,7 @@ const PanelTitle: React.FC<PanelTitleProps> = ({ title, setTitle, onClose }) => 
   return (
     <div className="flex items-center justify-between px-3 py-2 bg-white border-b border-base-300">
       <div className="flex items-center gap-2">
-        <AIAgentIcon className="size-6 text-pink-base" />
+        <NodeIcon name={icon} />
         {isEditing ? (
           <input
             ref={inputRef}
